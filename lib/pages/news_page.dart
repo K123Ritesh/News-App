@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/cotrollers/news_controller.dart';
-import 'package:news_app/pages/news_container_widget.dart';
+import 'package:news_app/widgets/news_container_widget.dart';
 import 'package:news_app/pages/news_detailing_page.dart';
 
 class NewsPage extends StatefulWidget {
@@ -20,15 +20,15 @@ class _NewsPageState extends State<NewsPage> {
     return GetBuilder<NewsController>(
         init: NewsController(),
         builder: (controller) {
-          // if (controller.isLoading) {
-          //   return const Center(
-          //     child: CircularProgressIndicator(),
-          //   );
-          // } else if (controller.newsData == null) {
-          //   return const Center(
-          //     child: Text('Data is NULL'),
-          //   );
-          // }
+          if (controller.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (controller.newsData == null) {
+            return const Center(
+              child: Text('Data is NULL'),
+            );
+          }
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -84,7 +84,7 @@ class _NewsPageState extends State<NewsPage> {
                       height: 150.h,
                       autoPlay: true,
                       enlargeCenterPage: true),
-                  items: [1, 2, 3, 4, 5].map((i) {
+                  items: controller.newsData!.articles!.map((article) {
                     return Builder(
                       builder: (BuildContext context) {
                         return InkWell(
@@ -92,22 +92,19 @@ class _NewsPageState extends State<NewsPage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => NewsDetailingPage(
-                                          article: controller
-                                              .newsData!.articles![i])));
+                                      builder: (context) =>
+                                          NewsDetailingPage(article: article)));
                             },
                             child: Container(
                               height: 150.h,
                               margin: EdgeInsets.symmetric(horizontal: 5.w),
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white),
-                                borderRadius: BorderRadius.circular(20.r),
-                                // image: DecorationImage(
-                                //     fit: BoxFit.fill,
-                                //     image: NetworkImage(controller.newsData!
-                                //             .articles![i].urlToImage ??
-                                //         ''))),
-                              ),
+                                  border: Border.all(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: NetworkImage(
+                                          article.urlToImage ?? ''))),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [

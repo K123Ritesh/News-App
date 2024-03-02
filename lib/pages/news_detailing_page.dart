@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/models/news_data_model.dart';
-import 'package:news_app/web_view_page.dart';
+import 'package:news_app/pages/web_view_page.dart';
 
 class NewsDetailingPage extends StatefulWidget {
   const NewsDetailingPage({super.key, required this.article});
